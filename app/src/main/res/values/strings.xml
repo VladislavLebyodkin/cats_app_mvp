@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">My Application 2</string>
+    <string name="common_error">Что-то пошло не так…</string>
+</resources>
