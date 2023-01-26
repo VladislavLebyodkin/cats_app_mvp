@@ -19,15 +19,6 @@
         app:srcCompat="@drawable/ic_wallpaper_default" />
 
     <Button
-        android:id="@+id/add_to_favourites_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:gravity="center"
-        android:text="@string/cat_list_add_to_favourites"
-        android:textSize="16sp" />
-
-    <Button
         android:id="@+id/download_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

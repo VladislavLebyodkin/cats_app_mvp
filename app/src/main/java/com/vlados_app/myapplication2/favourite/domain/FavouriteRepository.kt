@@ -1,8 +1,14 @@
 package com.vlados_app.myapplication2.favourite.domain
 
-import com.vlados_app.myapplication2.favourite.data.FavouriteCat
-import io.reactivex.Single
+import io.reactivex.Completable
+import io.reactivex.subjects.BehaviorSubject
 
 interface FavouriteRepository {
-    fun loadCats(page: Int): Single<List<FavouriteCat>>
+    val favouriteCatModelListSubject: BehaviorSubject<List<FavouriteCatModel>>
+
+    fun loadMoreCats(): Completable
+
+    fun downloadImage(url: String)
+
+    fun update()
 }

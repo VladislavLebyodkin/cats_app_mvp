@@ -1,70 +1,46 @@
 package com.vlados_app.myapplication2.di
 
 import android.app.Application
+import android.app.DownloadManager
+import android.content.Context
+import android.content.Context.DOWNLOAD_SERVICE
 import com.vlados_app.myapplication2.cat_list.data.CatRepositoryImpl
 import com.vlados_app.myapplication2.cat_list.domain.CatRepository
-import com.vlados_app.myapplication2.cat_list.presentation.CatListFragment
 import com.vlados_app.myapplication2.favourite.data.FavouriteRepositoryImpl
 import com.vlados_app.myapplication2.favourite.domain.FavouriteRepository
-import com.vlados_app.myapplication2.favourite.presentation.FavouriteFragment
 import com.vlados_app.myapplication2.network.CatService
-import dagger.*
-import javax.inject.Qualifier
-import javax.inject.Scope
+import com.vlados_app.myapplication2.network.createCatService
+import dagger.Binds
+import dagger.Module
+import dagger.Provides
 
-@AppScope
-@Component(modules = [AppModule::class])
-interface AppComponent {
-
-    fun inject(catListFragment: CatListFragment)
-    fun inject(favouriteFragment: FavouriteFragment)
-
-    @Component.Builder
-    interface Builder {
-
-        @BindsInstance
-        fun application(application: Application): Builder
-
-        @BindsInstance
-        fun apiKey(@ApiKeyQualifier apiKey: String): Builder
-
-        @BindsInstance
-        fun baseUrl(@BaseUrlQualifier baseUrl: String): Builder
-
-        fun build(): AppComponent
-    }
-}
-
-@Module(includes = [AppModule.Bindings::class])
-class AppModule {
+@Module
+interface AppModule {
 
     @AppScope
-    @Provides
-    fun provideCatService(
-        @ApiKeyQualifier apiKey: String,
-        @BaseUrlQualifier baseUrl: String
-    ): CatService {
-        return CatService(apiKey, baseUrl)
-    }
+    @Binds
+    fun bindsCatRepository(impl: CatRepositoryImpl): CatRepository
 
-    @Module
-    interface Bindings {
+    @AppScope
+    @Binds
+    fun bindsFavouriteRepository(impl: FavouriteRepositoryImpl): FavouriteRepository
+
+    companion object {
+        @AppScope
+        @Provides
+        fun provideCatService(): CatService {
+            return createCatService()
+        }
+
+        @Provides
+        @AppScope
+        fun provideContext(application: Application): Context = application
 
         @AppScope
-        @Binds
-        fun bindsCatRepository(impl: CatRepositoryImpl): CatRepository
-
-        @AppScope
-        @Binds
-        fun bindsFavouriteRepository(impl: FavouriteRepositoryImpl): FavouriteRepository
+        @Provides
+        fun provideDownloadManager(context: Context): DownloadManager {
+            return context.getSystemService(DOWNLOAD_SERVICE) as DownloadManager
+        }
     }
 }
 
-@Scope
-annotation class AppScope
-
-@Qualifier
-annotation class ApiKeyQualifier
-
-@Qualifier
-annotation class BaseUrlQualifier

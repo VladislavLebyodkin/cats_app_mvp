@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">My Application 2</string>
-    <string name="common_error">Что-то пошло не так…</string>
+    <string name="common_error">Something went wrong…</string>
+    <string name="cat_list_add_to_favourites">Add to favourites</string>
+    <string name="favourite_cat_list_download">Download</string>
+    <string name="empty_cat_list_view_text">There are no cats…</string>
+    <string name="menu_favourite">Favourite</string>
+    <string name="cat_list">Cat list</string>
 </resources>
