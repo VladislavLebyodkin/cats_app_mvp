@@ -9,6 +9,4 @@ interface FavouriteRepository {
     fun loadMoreCats(): Completable
 
     fun downloadImage(url: String)
-
-    fun update()
 }

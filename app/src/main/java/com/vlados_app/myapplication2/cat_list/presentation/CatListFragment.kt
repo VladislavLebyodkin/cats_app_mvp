@@ -10,7 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vlados_app.myapplication2.CatApp
 import com.vlados_app.myapplication2.R
 import com.vlados_app.myapplication2.cat_list.domain.CatModel
-import com.vlados_app.myapplication2.util.PagerScrollListener
+import com.vlados_app.myapplication2.common.util.PagerScrollListener
 import moxy.MvpFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -36,9 +36,6 @@ class CatListFragment : MvpFragment(), CatListView {
 
     private var onScrollListener: RecyclerView.OnScrollListener? = null
 
-    /**
-     * Failed to find GeneratedAppGlideModule. You should include an annotationProcessor compile dependency on com.github.bumptech.glide:compiler in your application and a @GlideModule annotated AppGlideModule implementation or LibraryGlideModules will be silently ignored
-     */
     private var loadingView: View? = null
     private var emptyCatListView: View? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -88,14 +85,6 @@ class CatListFragment : MvpFragment(), CatListView {
 
     override fun showError() {
         Toast.makeText(activity, R.string.common_error, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showEmptyCatListView() {
-        emptyCatListView?.visibility = View.VISIBLE
-    }
-
-    override fun hideEmptyCatListView() {
-        emptyCatListView?.visibility = View.VISIBLE
     }
 
     override fun onDestroyView() {

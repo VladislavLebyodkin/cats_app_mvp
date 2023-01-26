@@ -13,7 +13,4 @@ interface FavouriteView : MvpView {
     fun hideLoading()
     @StateStrategyType(SkipStrategy::class)
     fun showError()
-
-    fun showEmptyCatListView()
-    fun hideEmptyCatListView()
 }

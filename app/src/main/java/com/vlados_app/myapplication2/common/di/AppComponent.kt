@@ -1,4 +1,4 @@
-package com.vlados_app.myapplication2.di
+package com.vlados_app.myapplication2.common.di
 
 import android.app.Application
 import com.vlados_app.myapplication2.cat_list.presentation.CatListFragment
@@ -7,7 +7,7 @@ import dagger.BindsInstance
 import dagger.Component
 
 @AppScope
-@Component(modules = [AppModule::class, DatabaseModule::class])
+@Component(modules = [AppModule::class])
 interface AppComponent {
     fun inject(catListFragment: CatListFragment)
     fun inject(favouriteFragment: FavouriteFragment)

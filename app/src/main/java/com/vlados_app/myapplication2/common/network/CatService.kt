@@ -1,4 +1,4 @@
-package com.vlados_app.myapplication2.network
+package com.vlados_app.myapplication2.common.network
 
 import com.vlados_app.myapplication2.cat_list.data.model.CatDto
 import com.vlados_app.myapplication2.cat_list.data.model.FavouriteCatRequest

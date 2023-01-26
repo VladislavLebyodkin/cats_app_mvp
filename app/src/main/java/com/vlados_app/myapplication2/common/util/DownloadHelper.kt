@@ -1,4 +1,4 @@
-package com.vlados_app.myapplication2.util
+package com.vlados_app.myapplication2.common.util
 
 import android.app.DownloadManager
 import android.content.Context

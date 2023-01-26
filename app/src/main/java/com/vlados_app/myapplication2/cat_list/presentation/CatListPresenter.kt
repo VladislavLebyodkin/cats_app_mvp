@@ -28,12 +28,7 @@ class CatListPresenter @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 viewState.hideLoading()
-                if (it.isNotEmpty()) {
-                    viewState.hideEmptyCatListView()
-                    viewState.setCatList(it)
-                } else {
-                    viewState.showEmptyCatListView()
-                }
+                viewState.setCatList(it)
             }.also {
                 disposables.add(it)
             }

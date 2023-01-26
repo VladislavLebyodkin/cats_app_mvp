@@ -1,9 +1,8 @@
 package com.vlados_app.myapplication2
 
 import android.app.Application
-import com.vlados_app.myapplication2.di.AppComponent
-import com.vlados_app.myapplication2.di.DaggerAppComponent
-import com.vlados_app.myapplication2.di.DatabaseModule
+import com.vlados_app.myapplication2.common.di.AppComponent
+import com.vlados_app.myapplication2.common.di.DaggerAppComponent
 
 class CatApp : Application() {
 

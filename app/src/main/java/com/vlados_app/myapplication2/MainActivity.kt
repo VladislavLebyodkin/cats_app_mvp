@@ -18,36 +18,30 @@ class MainActivity : MvpActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val catListFragment = CatListFragment.newInstance()
-        val favouriteFragment = FavouriteFragment.newInstance()
-
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.inflateMenu(R.menu.main_nav_menu)
         toolbar.setOnMenuItemClickListener { item ->
             if (item.itemId == R.id.cat_list) {
                 fragmentManager.beginTransaction()
-                    .hide(favouriteFragment)
-                    .show(catListFragment)
+                    .replace(R.id.fragment_container, CatListFragment.newInstance(), CAT_LIST_TAG)
                     .commit()
+
                 toolbar.menu.findItem(R.id.cat_list).isVisible = false
                 toolbar.menu.findItem(R.id.favourite).isVisible = true
             } else if (item.itemId == R.id.favourite) {
                 fragmentManager.beginTransaction()
-                    .hide(catListFragment)
-                    .show(favouriteFragment)
+                    .replace(R.id.fragment_container, FavouriteFragment.newInstance(), FAVOURITE_TAG)
                     .commit()
+
                 toolbar.menu.findItem(R.id.cat_list).isVisible = true
                 toolbar.menu.findItem(R.id.favourite).isVisible = false
             }
             false
         }
 
-        if (fragmentManager.findFragmentByTag(CAT_LIST_TAG) == null) {
+        if (savedInstanceState == null) {
             fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, catListFragment, CAT_LIST_TAG)
-                .add(R.id.fragment_container, favouriteFragment, FAVOURITE_TAG)
-                .hide(favouriteFragment)
-                .show(catListFragment)
+                .replace(R.id.fragment_container, CatListFragment.newInstance(), CAT_LIST_TAG)
                 .commit()
 
             toolbar.menu.findItem(R.id.cat_list).isVisible = false

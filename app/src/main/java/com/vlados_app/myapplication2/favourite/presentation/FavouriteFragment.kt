@@ -10,6 +10,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.vlados_app.myapplication2.CatApp
 import com.vlados_app.myapplication2.R
 import com.vlados_app.myapplication2.favourite.domain.FavouriteCatModel
+import com.vlados_app.myapplication2.common.util.PagerScrollListener
 import moxy.MvpFragment
 import moxy.ktx.moxyPresenter
 import javax.inject.Inject
@@ -22,6 +23,8 @@ class FavouriteFragment : MvpFragment(), FavouriteView {
         fun newInstance() = FavouriteFragment()
     }
 
+    private var onScrollListener: RecyclerView.OnScrollListener? = null
+
     private var loadingView: View? = null
     private var emptyCatListView: View? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -30,7 +33,7 @@ class FavouriteFragment : MvpFragment(), FavouriteView {
     lateinit var presenterProvider: Provider<FavouritePresenter>
     private val presenter by moxyPresenter { presenterProvider.get() }
 
-    private val adapter = FavouriteAdapter {
+    private var adapter: FavouriteAdapter? = FavouriteAdapter {
         presenter.onDownloadClicked(it)
     }
 
@@ -52,11 +55,15 @@ class FavouriteFragment : MvpFragment(), FavouriteView {
         loadingView = view.findViewById(R.id.loading)
         swipeRefreshLayout = view.findViewById(R.id.swipe_refresh_layout)
         val recycler = view.findViewById<RecyclerView>(R.id.recycler)
-        recycler.adapter = adapter
 
         swipeRefreshLayout?.setOnRefreshListener {
-            presenter.update()
+            presenter.loadMoreCats()
         }
+
+        recycler.adapter = adapter
+        val listener = PagerScrollListener(presenter::loadMoreCats)
+        onScrollListener = listener
+        recycler.addOnScrollListener(listener)
     }
 
     override fun showLoading() {
@@ -72,15 +79,14 @@ class FavouriteFragment : MvpFragment(), FavouriteView {
     }
 
     override fun setCatList(items: List<FavouriteCatModel>) {
-        adapter.submitList(items)
+        adapter?.submitList(items)
         swipeRefreshLayout?.isRefreshing = false
     }
 
-    override fun showEmptyCatListView() {
-        emptyCatListView?.visibility = View.VISIBLE
-    }
+    override fun onDestroyView() {
+        super.onDestroyView()
 
-    override fun hideEmptyCatListView() {
-        emptyCatListView?.visibility = View.GONE
+        adapter = null
+        onScrollListener = null
     }
 }

@@ -14,7 +14,4 @@ interface CatListView : MvpView {
 
     @StateStrategyType(SkipStrategy::class)
     fun showError()
-
-    fun showEmptyCatListView()
-    fun hideEmptyCatListView()
 }

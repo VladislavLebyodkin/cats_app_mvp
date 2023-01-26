@@ -27,21 +27,16 @@ class FavouritePresenter @Inject constructor(
         repository.favouriteCatModelListSubject
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .doOnError { viewState.showError() }
             .subscribe {
-                Log.d("TAGDEBUG", "subscribeCatList: ${it.size}")
                 viewState.hideLoading()
-                if (it.isNotEmpty()) {
-                    viewState.hideEmptyCatListView()
-                    viewState.setCatList(it)
-                } else {
-                    viewState.showEmptyCatListView()
-                }
+                viewState.setCatList(it)
             }.also {
                 disposables.add(it)
             }
     }
 
-    private fun loadMoreCats() {
+    fun loadMoreCats() {
         repository.loadMoreCats()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -54,10 +49,6 @@ class FavouritePresenter @Inject constructor(
 
     fun onDownloadClicked(url: String) {
         repository.downloadImage(url)
-    }
-
-    fun update() {
-        repository.update()
     }
 
     override fun onDestroy() {
